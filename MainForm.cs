@@ -13,7 +13,7 @@ namespace OraDeStudiu
     /// <summary>
     /// Fereastra: taburile Azi, Pian, Keyboard, Player, Scor, Setări (Control 1–6).
     /// Scurtăturile playerului merg oriunde: F5 pornește sau pune pauză, F6 spune unde ești,
-    /// F7 și F8 înapoi și înainte 5 secunde, F9 mai rar, F11 mai repede, F12 viteza normală.
+    /// F7 și F8 înapoi și înainte 5 secunde, F9 mai rar, F11 mai repede, F10 viteza normală.
     /// </summary>
     public class MainForm : Form
     {
@@ -22,7 +22,7 @@ namespace OraDeStudiu
         readonly TabControl tabs = new TabControl { Dock = DockStyle.Fill };
         readonly TextBox stare = new TextBox { ReadOnly = true, Dock = DockStyle.Bottom, AccessibleName = "Stare", TabStop = false };
         readonly Timer ceas = new Timer { Interval = 60000 };
-        bool closingForUpdate;
+
 
         // Azi
         ListBox lAzi;
@@ -83,7 +83,7 @@ namespace OraDeStudiu
             catch { }
         }
 
-        public void CloseForUpdate() { closingForUpdate = true; Close(); }
+        public void CloseForUpdate() { Close(); }
 
         static FlowLayoutPanel Panou(TabPage p)
         {
@@ -329,13 +329,13 @@ namespace OraDeStudiu
             RandButoane(f,
                 Buton("Mai rar (F9)", (s, e) => Viteza(-5)),
                 Buton("Mai repede (F11)", (s, e) => Viteza(5)),
-                Buton("Viteza normală (F12)", (s, e) => Viteza(0)),
+                Buton("Viteza normală (F10)", (s, e) => Viteza(0)),
                 Buton("De la început", (s, e) => { pl.Pozitie = 0; Announce("De la început."); }));
             Eticheta(f, "Volumul");
             tVolum = new TrackBar { Minimum = 0, Maximum = 100, TickFrequency = 10, SmallChange = 5, LargeChange = 10, Width = 400, Value = Math.Max(0, Math.Min(100, st.S.Volum)), AccessibleName = "Volumul" };
             tVolum.ValueChanged += (s, e) => { st.S.Volum = tVolum.Value; pl.SetVolum(tVolum.Value); };
             f.Controls.Add(tVolum);
-            Eticheta(f, "Scurtături, oriunde în aplicație: F5 pornește sau pune pauză, F6 spune unde ești, F7 și F8 înapoi și înainte 5 secunde, F9 mai rar, F11 mai repede, F12 viteza normală. Viteza se schimbă fără să se schimbe tonul.").MaximumSize = new Size(820, 0);
+            Eticheta(f, "Scurtături, oriunde în aplicație: F5 pornește sau pune pauză, F6 spune unde ești, F7 și F8 înapoi și înainte 5 secunde, F9 mai rar, F11 mai repede, F10 viteza normală. Viteza se schimbă fără să se schimbe tonul.").MaximumSize = new Size(820, 0);
             return p;
         }
 
@@ -388,7 +388,7 @@ namespace OraDeStudiu
                 case Keys.F8: Sari(5); return true;
                 case Keys.F9: Viteza(-5); return true;
                 case Keys.F11: Viteza(5); return true;
-                case Keys.F12: Viteza(0); return true;
+                case Keys.F10: Viteza(0); return true;
             }
             if ((keyData & Keys.Modifiers) == Keys.Control)
             {

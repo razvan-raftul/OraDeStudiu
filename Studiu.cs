@@ -174,7 +174,7 @@ namespace OraDeStudiu
         /// <summary>O piesă din repertoriu de repetat; la keyboard, cam jumătate din ori, într-o tonalitate aleasă de program.</summary>
         public Provocare AdaugaRepetare(string instr)
         {
-            var deja = new HashSet<string>(S.Provocari.Where(p => !p.Facuta || p.ZiuaFacuta == Azi).Select(p => p.Cale), StringComparer.OrdinalIgnoreCase);
+            var deja = new HashSet<string>(S.Provocari.Where(x => !x.Facuta || x.ZiuaFacuta == Azi).Select(x => x.Cale), StringComparer.OrdinalIgnoreCase);
             string ieri; S.UltimaRepetata.TryGetValue(instr, out ieri);
             var lista = Repertoriu(instr).Where(f => !deja.Contains(f)).ToList();
             if (lista.Count > 1 && ieri != null) lista.RemoveAll(f => string.Equals(f, ieri, StringComparison.OrdinalIgnoreCase));
@@ -192,7 +192,7 @@ namespace OraDeStudiu
         /// <summary>O piesă nouă din folderele de învățat; termen o săptămână la pian, trei zile la keyboard.</summary>
         public Provocare AdaugaNoua(string instr)
         {
-            var deja = new HashSet<string>(S.Provocari.Select(p => p.Cale), StringComparer.OrdinalIgnoreCase);
+            var deja = new HashSet<string>(S.Provocari.Select(x => x.Cale), StringComparer.OrdinalIgnoreCase);
             var lista = DeInvatat(instr).Where(f => !deja.Contains(f)).ToList();
             if (lista.Count == 0) return null;
             var p = new Provocare
